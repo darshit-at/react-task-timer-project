@@ -1,0 +1,12 @@
+.Card {
+    background: whitesmoke;
+    width: 500px;
+    height: auto;
+    transform: translate(100% , 30%);
+    padding: 7px 10px;
+}
+.dashboard {
+    width: 80%;
+    text-align: center;
+    transform: translate(16%, 10%);
+}

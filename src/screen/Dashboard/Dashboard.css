@@ -1,0 +1,24 @@
+.dispaly-control {
+    width: 100%;
+    margin: 10px 0px;
+    border: 2px solid rgb(223, 221, 221);
+    border-radius: 15px;
+    height: 30px;
+}
+.dispaly-control .dispaly-control-timer {
+    
+    border-radius: 15px;
+    height: 100%;
+}
+.btn {
+    margin: 0px 9px;
+}
+#loader {
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+}
