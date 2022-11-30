@@ -16,9 +16,25 @@
     .Card {
         transform: translate(70% , 40%);
     }
+    .dashboard {
+        transform: translate(20% ,40%);
+        margin-bottom: 90px;
+    }
 }
 @media screen and (max-width: 960px) {
     .Card {
-        transform: translate(10% , 40%);
+        transform: translate(20% , 40%);
     }
+}
+@media screen and (max-width: 540px) {
+    .Card {
+        transform: translate(5% , 40%);
+        width: 400px;
+    }
+    .dashboard {
+        width: 90%;
+        text-align: center;
+        transform: translate(1%, 10%);
+    }
+    
 }

@@ -43,3 +43,14 @@
 .toggle ul  li .nav-profile-link:hover {
     color: rgb(58, 17, 17);
 }
+
+@media screen and (max-width:540px) {
+    .header {
+        padding: 0px;
+    }
+    .toggle {
+        background: white;
+        z-index: 12;
+        display: none;
+    }
+}

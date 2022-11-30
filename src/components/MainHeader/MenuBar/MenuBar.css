@@ -1,0 +1,27 @@
+.menu-list {
+    background: rgb(82, 82, 119);
+    height: 105vh;
+
+    text-align: center;
+
+    width: 200px;
+    z-index: 4;
+}
+.menu-list li {
+ display: block;
+ margin: 15px 4px;
+
+}
+.close-icon {
+    float: left !important;
+    margin: 5px;
+    font-size: 22px;
+}
+.nav-profile-link {
+    text-decoration: none;
+    color: white;
+    margin-left: 12px;
+}
+.logout-icon-list {
+    margin-left: 42px;
+}

@@ -14,9 +14,8 @@ function App() {
   const isUserAlreadyLogin = getItem("user");
   const navigator = useNavigate();
   const { isAuth } = useContext(authContext);
-  
+
   useEffect(() => {
-   
     if (!isAuth && !isUserAlreadyLogin?.userToken) {
       navigator("/auth");
     }

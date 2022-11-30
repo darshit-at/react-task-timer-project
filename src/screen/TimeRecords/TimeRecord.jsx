@@ -4,10 +4,10 @@ import authContext from "../../context/AuthContext";
 
 const TimeRecord = (props) => {
   const { userTimeList } = useContext(authContext);
-  
+
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
-  };
+  }
 
   function formatDate(date) {
     return [
@@ -16,18 +16,23 @@ const TimeRecord = (props) => {
       date.getFullYear(),
     ].join("/");
   }
-  
+
   const showTimeRecord = (item, index) => {
+    const formateDate = item?.currentDate?.split("/");
+    const month = +formateDate[0] - 1;
+    const year = formateDate[2];
+    const date = formateDate[1];
+
     return (
       <tr key={`${index}`}>
         <td>{index + 1}</td>
-        <td>{formatDate(new Date(item?.currentDate))}</td>
+        <td>{formatDate(new Date(year, month, date))}</td>
         <td>{item.startTime}</td>
         <td>{item.endTime}</td>
       </tr>
     );
   };
-  
+
   return (
     <Fragment>
       <table className="table table-responsive table-striped table-bordered">
