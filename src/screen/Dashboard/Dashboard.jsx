@@ -10,20 +10,20 @@ import { ProgressBar } from "baseui/progress-bar";
 let clearTimer = "";
 const DashBoard = (props) => {
   const maxTimeMin = 540;
-  const { onStartTimer, onEndTimer, userTimeList, onChangeDropWidth } = useContext(authContext);
+  const { onStartTimer, onEndTimer, userTimeList, onChangeDropWidth } =
+    useContext(authContext);
   const [dropWidth, setDropWidth] = useState(0);
   const [isUserStartTimer, setIsUserStartTimer] = useState(false);
   const [dropBackgroundColor, setDropBackGroundColor] = useState("");
-  
+
   useEffect(() => {
     const userStartTime = getItem("currentWidth");
     if (userStartTime !== null) {
       setDropWidth(userStartTime?.width);
       setIsUserStartTimer(userStartTime?.isUserStartTimer);
-    };
-  
+    }
   }, []);
- 
+
   useEffect(() => {
     if (isUserStartTimer) {
       clearTimer = setInterval(() => {
@@ -39,7 +39,10 @@ const DashBoard = (props) => {
 
   useEffect(() => {
     if (dropWidth > 0) {
-      onChangeDropWidth({ width: dropWidth, isUserStartTimer: isUserStartTimer });
+      onChangeDropWidth({
+        width: dropWidth,
+        isUserStartTimer: isUserStartTimer,
+      });
     }
     if (dropWidth < 270) {
       setDropBackGroundColor("red");
@@ -51,7 +54,6 @@ const DashBoard = (props) => {
     } else if (dropWidth >= 540) {
       setDropBackGroundColor("green");
     }
- 
   }, [dropWidth, isUserStartTimer]);
 
   const startTimerHandler = () => {
@@ -129,7 +131,6 @@ const DashBoard = (props) => {
           )}
         </div>
       </Card>
-    
     </Fragment>
   );
 };

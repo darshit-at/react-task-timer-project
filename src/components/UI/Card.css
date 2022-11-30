@@ -1,7 +1,7 @@
 .Card {
     /* background: whitesmoke; */
     width: 550px;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1  );
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
     height: auto;
     transform: translate(130% , 40%);
     padding: 7px 10px;
@@ -10,4 +10,15 @@
     width: 80%;
     text-align: center;
     transform: translate(16%, 10%);
+}
+
+@media screen and (max-width: 1200px) {
+    .Card {
+        transform: translate(70% , 40%);
+    }
+}
+@media screen and (max-width: 960px) {
+    .Card {
+        transform: translate(10% , 40%);
+    }
 }

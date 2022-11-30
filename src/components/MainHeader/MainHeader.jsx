@@ -8,7 +8,7 @@ import { clearStorage, getItem } from "../../helper/Storage";
 import { NavLink } from "react-router-dom";
 
 const MainHeader = () => {
-    const getUserName = getItem("user");
+    const userName = getItem("user");
     const [showToggleOption, setShowToggleOption] = useState(false);
 
     const togglerHandler =() => {
@@ -47,7 +47,7 @@ const MainHeader = () => {
       <div className="col-12 col-md-4 col-sm-4 col-lg-4  header-contain">
         <div className="float-end" onClick={togglerHandler}>
         <FontAwesomeIcon icon={faUser} />
-        <span>Hi! {getUserName?.userName}</span>
+        <span>Hi! {userName?.userName}</span>
         </div>    
       </div>
       {showToggleOption && showToggle() }
