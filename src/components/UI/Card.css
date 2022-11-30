@@ -23,7 +23,7 @@
 }
 @media screen and (max-width: 960px) {
     .Card {
-        transform: translate(20% , 40%);
+        transform: translate(10% , 40%);
     }
 }
 @media screen and (max-width: 540px) {

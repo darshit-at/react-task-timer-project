@@ -1,20 +1,26 @@
 import React, { Fragment, useContext } from "react";
 import "./TimeRecord.css";
 import authContext from "../../context/AuthContext";
+import { format } from 'date-fns'
 
 const TimeRecord = (props) => {
   const { userTimeList } = useContext(authContext);
 
+  function formatDate(date) {
+    const timerDate = date.split("/");
+    const month= +timerDate[0] - 1;
+    const year = +timerDate[2];
+    const day = +timerDate[1];
+    return format(new Date(year, month, day), "dd-MM-yyyy");
+
+  }
+
   const showTimeRecord = (item, index) => {
-    const formateDate = item?.currentDate?.split("/");
-    const month = formateDate[0];
-    const year  = formateDate[2];
-    const date  = formateDate[1];
 
     return (
       <tr key={`${index}`}>
         <td>{index + 1}</td>
-        <td>{`${date}/${month}/${year}`}</td>
+        <td>{formatDate(item?.currentDate)}</td>
         <td>{item.startTime}</td>
         <td>{item.endTime}</td>
       </tr>
