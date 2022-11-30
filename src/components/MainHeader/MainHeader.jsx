@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ContentTitle from "../ContentTitle/ContentTitle";
-import NavBar from "./Navbar";
+import NavBar from "./NavBar/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import './MainHeader.css';

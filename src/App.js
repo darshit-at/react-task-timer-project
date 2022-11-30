@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useEffect } from "react";
 import Login from "./screen/Auth/Login/Login";
 import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import DashBoard from "./screen/Dashboard/Dashboard";
 import SignUp from "./screen/Auth/SignUp/SignUp";
 import authContext from "./context/AuthContext";
 import MainHeader from "./components/MainHeader/MainHeader";
@@ -15,9 +14,9 @@ function App() {
   const isUserAlreadyLogin = getItem("user");
   const navigator = useNavigate();
   const { isAuth } = useContext(authContext);
-
+console.log(navigator)
   useEffect(() => {
-    
+   
     if (!isAuth && !isUserAlreadyLogin?.userToken) {
       navigator("/auth");
     }

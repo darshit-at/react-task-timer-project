@@ -1,5 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
-import { Spinner } from "baseui/spinner";
+import React, { Fragment, useContext } from "react";
 import "./TimeRecord.css";
 import authContext from "../../context/AuthContext";
 

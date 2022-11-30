@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getItem } from '../helper/Storage';
 import { addTimerData as addTimerDataAPI, getTimerData as getTimerDataAPI} from '../service/AuthService';
 import { setItem } from '../helper/Storage';
@@ -22,7 +22,7 @@ export const AuthContextProvide = (props) => {
        if(userData?.userId) {
            fetchTimerData(userData?.userId);
        };
-    },[]);
+    },[userData?.userId]);
 
     const getDropWidth = async (value) => {
         const timerDetails = {
@@ -34,9 +34,9 @@ export const AuthContextProvide = (props) => {
         setItem("currentWidth", JSON.stringify({ width: response?.width, isUserStartTimer: response?.isUserStartTimer}));
     };
 
-    const getTimerRecords = () => {
+    const getTimerRecords =useCallback(() => {
         fetchTimerData(userData?.userId);
-    };
+    },[userData?.userId]);
 
     const getStartTime = (time) => {
         const newStartTime = [...timeRecords];
@@ -60,7 +60,7 @@ export const AuthContextProvide = (props) => {
         setIsAuth(value);
     }
     return (
-        <authContext.Provider value={{isAuth ,onTimeHistoryRender : getTimerRecords, onLogin :logInHandler, onStartTimer : getStartTime,onChangeDropWidth : getDropWidth, userTimeList : timeRecords,onEndTimer :getEndTime}}>
+        <authContext.Provider value={{isAuth ,onComponentMount : getTimerRecords, onLogin :logInHandler, onStartTimer : getStartTime,onChangeDropWidth : getDropWidth, userTimeList : timeRecords,onEndTimer :getEndTime}}>
             {props.children}
         </authContext.Provider>
     )

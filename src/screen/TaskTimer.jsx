@@ -5,15 +5,15 @@ import DashBoard from './Dashboard/Dashboard';
 import TimeRecord from './TimeRecords/TimeRecord';
 
 const TaskTimer = (props) => {
-    const {  onTimeHistoryRender, userTimeList } = useContext(authContext);
+    const {  onComponentMount, userTimeList } = useContext(authContext);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        onTimeHistoryRender();
+        onComponentMount();
         const clear =  setTimeout(() => {
             setLoading(false);
             clearTimeout(clear);
         }, 500);
-    },[]);
+    },[onComponentMount]);
 
     return (
          <Fragment>
