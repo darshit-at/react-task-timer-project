@@ -81,7 +81,7 @@ const Login = () => {
           {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <div className="mt-3">
-          <Button type="submit" classes="form-control authButton">
+          <Button type="submit" classes="form-control authButton" disable = {userEmail === "" || userPassword === ""? true : false}>
             Login
           </Button>
         </div>

@@ -8,3 +8,6 @@
     width: 100%;
     margin:3px 0px !important;
 }
+.btn:disabled {
+    cursor: not-allowed !important;
+}   
