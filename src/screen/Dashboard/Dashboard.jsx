@@ -3,34 +3,27 @@ import Button from "../../components/Button/Button";
 import ContentTitle from "../../components/ContentTitle/ContentTitle";
 import Card from "../../components/UI/Card";
 import authContext from "../../context/AuthContext";
-import { getItem, removeKey, setItem } from "../../helper/Storage";
+import { getItem, removeKey } from "../../helper/Storage";
 import "./Dashboard.css";
 import { ProgressBar } from "baseui/progress-bar";
-import TimeRecord from "../TimeRecords/TimeRecord";
-import { Spinner } from "baseui/spinner";
+
 let clearTimer = "";
 const DashBoard = (props) => {
   const maxTimeMin = 540;
-
-  const { onStartTimer, onEndTimer, onTimeHistoryRender, userTimeList } =useContext(authContext);
+  const { onStartTimer, onEndTimer, userTimeList, onChangeDropWidth } = useContext(authContext);
   const [dropWidth, setDropWidth] = useState(0);
   const [isUserStartTimer, setIsUserStartTimer] = useState(false);
   const [dropBackgroundColor, setDropBackGroundColor] = useState("");
-  const [timerId, setTimerId] = useState(0);
-
+  
   useEffect(() => {
     const userStartTime = getItem("currentWidth");
-    const previewTimeId = getItem("previewTimeId");
     if (userStartTime !== null) {
-      setDropWidth(userStartTime.width);
+      setDropWidth(userStartTime?.width);
       setIsUserStartTimer(userStartTime?.isUserStartTimer);
-      setTimerId(+previewTimeId?.timerId);
-    }
-    onTimeHistoryRender();
+    };
+  
   }, []);
-
-  console.log(timerId);
-  console.log()
+ 
   useEffect(() => {
     if (isUserStartTimer) {
       clearTimer = setInterval(() => {
@@ -46,10 +39,7 @@ const DashBoard = (props) => {
 
   useEffect(() => {
     if (dropWidth > 0) {
-      setItem(
-        "currentWidth",
-        JSON.stringify({ width: dropWidth, isUserStartTimer: isUserStartTimer })
-      );
+      onChangeDropWidth({ width: dropWidth, isUserStartTimer: isUserStartTimer });
     }
     if (dropWidth < 270) {
       setDropBackGroundColor("red");
@@ -61,6 +51,7 @@ const DashBoard = (props) => {
     } else if (dropWidth >= 540) {
       setDropBackGroundColor("green");
     }
+ 
   }, [dropWidth, isUserStartTimer]);
 
   const startTimerHandler = () => {
@@ -70,7 +61,6 @@ const DashBoard = (props) => {
       setDropWidth(0);
     }
     const timeDetails = {
-      id: timerId,
       currentDate: date.toLocaleDateString(),
       startTime: date.toLocaleTimeString(),
       endTime: "",
@@ -83,10 +73,8 @@ const DashBoard = (props) => {
 
   const endTimerHandler = () => {
     const endTime = new Date().toLocaleTimeString();
-    onEndTimer(endTime, timerId);
-    setTimerId((previewState) => +previewState + 1);
+    onEndTimer(endTime);
     setIsUserStartTimer(false);
-    setItem("previewTimeId", JSON.stringify({ timerId: timerId + 1 }));
   };
 
   const convertSecondsToHour = (totalSeconds) => {
@@ -141,8 +129,7 @@ const DashBoard = (props) => {
           )}
         </div>
       </Card>
-      {userTimeList?.length > 0 && <TimeRecord userTimeList = {userTimeList}/>}
-      {userTimeList?.length === 0 && <div id="loader"><Spinner /></div>}
+    
     </Fragment>
   );
 };

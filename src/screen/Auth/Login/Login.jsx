@@ -77,7 +77,7 @@ const Login = () => {
        {error && <p style ={{color : "red"}}>{error}</p>}
       </div>
       <div className="mt-3">
-        <Button type ="submit" classes = "form-control">Login</Button>
+        <Button type ="submit" classes = "form-control authButton">Login</Button>
       </div>
       <div style={{textAlign : 'center'}}>
       <NavLink to = "/auth/signup">Register Here</NavLink>

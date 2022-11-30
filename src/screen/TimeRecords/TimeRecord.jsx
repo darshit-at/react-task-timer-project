@@ -4,8 +4,8 @@ import "./TimeRecord.css";
 import authContext from "../../context/AuthContext";
 
 const TimeRecord = (props) => {
-
-
+  const { userTimeList } = useContext(authContext);
+  
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
   };
@@ -17,7 +17,7 @@ const TimeRecord = (props) => {
       date.getFullYear(),
     ].join("/");
   }
-
+  
   const showTimeRecord = (item, index) => {
     return (
       <tr key={`${index}`}>
@@ -41,11 +41,11 @@ const TimeRecord = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.userTimeList?.length > 0 ? (
-            props.userTimeList?.map((item, index) => showTimeRecord(item, index))
+          {userTimeList?.length > 0 ? (
+            userTimeList?.map((item, index) => showTimeRecord(item, index))
           ) : (
             <tr>
-              <td colSpan={12}>Loading...</td>
+              <td colSpan={12}>No Data found</td>
             </tr>
           )}
         </tbody>

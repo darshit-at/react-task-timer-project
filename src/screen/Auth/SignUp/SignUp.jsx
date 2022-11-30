@@ -99,7 +99,7 @@ const SignUp = () => {
               height:"40px",
             })
           }
-        }}
+        }}  
          required
        />
       <label className="form-label">password</label>
@@ -120,7 +120,7 @@ const SignUp = () => {
        />
        {error && <p style={{color:"red"}} >{error}</p>}
       <div className="mb-3 button-sign-up">
-        <Button type ="submit" classes = "form-control" disable = {!userEmail  || !userName  || !userPassword? true : false}>{loading ? <div className="spinner-border text-success" role="status"></div> : "Sign up"}</Button>
+        <Button type ="submit" classes = "form-control authButton" disable = {!userEmail  || !userName  || !userPassword? true : false}>{loading ? <div className="spinner-border text-success" role="status"></div> : "Sign up"}</Button>
       </div>
       <div style ={{textAlign : "center"}}>
       <NavLink to = "/auth">Already user</NavLink>

@@ -9,13 +9,15 @@ import MainHeader from "./components/MainHeader/MainHeader";
 import { getItem } from "./helper/Storage";
 import Profile from "./screen/Profile/Profile";
 import TimeRecord from "./screen/TimeRecords/TimeRecord";
+import TaskTimer from "./screen/TaskTimer";
 
 function App() {
   const isUserAlreadyLogin = getItem("user");
-  console.log(isUserAlreadyLogin);
   const navigator = useNavigate();
   const { isAuth } = useContext(authContext);
+
   useEffect(() => {
+    
     if (!isAuth && !isUserAlreadyLogin?.userToken) {
       navigator("/auth");
     }
@@ -26,7 +28,7 @@ function App() {
       {isAuth && <MainHeader />}
       {!isAuth && isUserAlreadyLogin?.userToken && <MainHeader />}
       <Routes>
-        <Route path="/" element={<DashBoard />} />
+        <Route path="/" element={<TaskTimer />} />
         <Route path="/auth" element={<Login />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
