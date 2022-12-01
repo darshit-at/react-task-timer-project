@@ -115,7 +115,7 @@ const SignUp = () => {
             type="text"
             value={userName || ""}
             name="userName"
-       
+            onChange={userNameHandler}
             placeholder="Enter your name"
             overrides={{
               Input: {
