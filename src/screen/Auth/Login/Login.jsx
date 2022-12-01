@@ -42,12 +42,12 @@ const Login = () => {
       setPassWordValidate("Please enter password");
     }
     if (userEmail !== "" && userPassword !== "") {
-      const userData = {
+      const userCredentials = {
         email: userEmail,
         password: userPassword,
         returnSecureToken: true,
       };
-      const response = await fetchUserData(userData);
+      const response = await fetchUserData(userCredentials);
       if (response?.data?.idToken) {
         Swal.fire({
           position: "center-center",
@@ -101,7 +101,6 @@ const Login = () => {
               onChange={(e) => userPasswordHandler(e.target.value)}
               placeholder="Password"
             />
-
             <span style={{ color: "red" }}>
               {error ? error : passWordValidate}
             </span>

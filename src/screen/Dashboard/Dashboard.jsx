@@ -72,9 +72,11 @@ const DashBoard = (props) => {
       }),
       endTime: "",
     };
-    onStartTimer(timeDetails);
-    setTimeout(() => {
+   
+    const clearTimer = setTimeout(() => {
+      onStartTimer(timeDetails);
       setIsUserStartTimer(true);
+      clearTimeout(clearTimer);
     }, 500);
   };
 
