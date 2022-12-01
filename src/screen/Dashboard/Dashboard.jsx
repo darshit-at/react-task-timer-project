@@ -64,7 +64,7 @@ const DashBoard = (props) => {
     }
     const timeDetails = {
       currentDate: date.toLocaleDateString(),
-      startTime: date.toLocaleTimeString(),
+      startTime: date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',second : 'numeric', hour12: true }),
       endTime: "",
     };
     onStartTimer(timeDetails);
@@ -74,7 +74,7 @@ const DashBoard = (props) => {
   };
 
   const endTimerHandler = () => {
-    const endTime = new Date().toLocaleTimeString();
+    const endTime = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',second : 'numeric', hour12: true });
     onEndTimer(endTime);
     setIsUserStartTimer(false);
   };
@@ -99,7 +99,7 @@ const DashBoard = (props) => {
   return (
     <Fragment>
       <Card className="dashboard">
-        <ContentTitle title="Timer" />
+        <ContentTitle title="Time" />
         <div className="timer-input">
           <ProgressBar
             value={(dropWidth / maxTimeMin) * 100}
