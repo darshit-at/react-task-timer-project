@@ -11,10 +11,13 @@ export const AuthContextProvide = (props) => {
   const userData = getItem("user");
   const [isAuth, setIsAuth] = useState(false);
   const [timeRecords, setTimeRecords] = useState([]);
+  const [timer, setTimer] = useState({
+    currentDropWidth: "",
+    isStartTimer: "",
+  });
 
   const fetchTimerData = async (userId) => {
     const timerData = await getTimerDataAPI(userId);
-    console.log(timerData);
     if (timerData) {
       setTimeRecords(timerData?.userTimerData);
       setItem(
@@ -28,26 +31,42 @@ export const AuthContextProvide = (props) => {
   };
 
   useEffect(() => {
-    console.log("this useEffect is run");
     if (userData?.userId) {
       fetchTimerData(userData?.userId);
     }
   }, [userData?.userId]);
 
-  const getDropWidth = async (value) => {
-    const timerDetails = {
-      width: value.width,
-      isUserStartTimer: value.isUserStartTimer,
-      userTimerData: timeRecords,
+  useEffect(() => {
+    const sentTimerData = async () => {
+      const timerDetails = {
+        width:timer.currentDropWidth,
+        isUserStartTimer: timer.isStartTimer,
+        userTimerData: timeRecords,
+      };
+      const response = await addTimerDataAPI(timerDetails, userData?.userId);
+      setItem(
+        "currentWidth",
+        JSON.stringify({
+          width: response?.width,
+          isUserStartTimer: response?.isUserStartTimer,
+        })
+      );
     };
-    const response = await addTimerDataAPI(timerDetails, userData?.userId);
-    setItem(
-      "currentWidth",
-      JSON.stringify({
-        width: response?.width,
-        isUserStartTimer: response?.isUserStartTimer,
-      })
-    );
+    sentTimerData();
+  }, [timer.currentDropWidth, timer.isStartTimer]);
+
+  const getDropWidth = (value) => {
+    setTimer((previewState) => {
+      return {
+        ...previewState,
+        currentDropWidth: value.width,
+        isStartTimer: value.isUserStartTimer,
+      };
+    });
+  };
+
+  const getCurrentTimerRecords = (timeData) => {
+    return timeData;
   };
 
   const getTimerRecords = useCallback(() => {
@@ -57,7 +76,7 @@ export const AuthContextProvide = (props) => {
   const startTimeHandler = (time) => {
     const newStartTime = [...timeRecords];
     newStartTime.push(time);
-    setTimeRecords(newStartTime);
+    setTimeRecords(() => newStartTime);
   };
 
   const endTimeHandler = (endTime, timerId) => {
@@ -68,7 +87,8 @@ export const AuthContextProvide = (props) => {
       }
       return item;
     });
-    setTimeRecords(setEndTime);
+    getCurrentTimerRecords(setEndTime);
+    setTimeRecords(() => setEndTime);
   };
 
   const logInHandler = (value) => {

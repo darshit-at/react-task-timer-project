@@ -63,8 +63,13 @@ const DashBoard = (props) => {
       setDropWidth(0);
     }
     const timeDetails = {
-      currentDate: date.toLocaleDateString(),
-      startTime: date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',second : 'numeric', hour12: true }),
+      currentDate: date,
+      startTime: date.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      }),
       endTime: "",
     };
     onStartTimer(timeDetails);
@@ -74,7 +79,12 @@ const DashBoard = (props) => {
   };
 
   const endTimerHandler = () => {
-    const endTime = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',second : 'numeric', hour12: true });
+    const endTime = new Date().toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    });
     onEndTimer(endTime);
     setIsUserStartTimer(false);
   };
