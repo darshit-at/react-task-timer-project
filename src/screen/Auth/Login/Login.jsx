@@ -21,27 +21,24 @@ const Login = () => {
 
   const userEmailHandler = (value) => {
     setUserEmail(value);
-    setError();
     setEmailValidate("");
   };
   const userPasswordHandler = (value) => {
     setUserPassword(value);
-    setError();
     setPassWordValidate("");
   };
 
   const handlerSubmit = async (e) => {
-
     e.preventDefault();
-    const isEmailVaild    = checkBlankUserInput(userEmail);
+    const isEmailVaild = checkBlankUserInput(userEmail);
     const isPassWordVaild = checkBlankUserInput(userPassword);
-    if(isEmailVaild) {
+    if (isEmailVaild) {
       setEmailValidate("Please enter email ");
     }
-    if(isPassWordVaild){
+    if (isPassWordVaild) {
       setPassWordValidate("Please enter password");
     }
-    if(userEmail!=="" && userPassword !== "") {
+    if (userEmail !== "" && userPassword !== "") {
       const userData = {
         email: userEmail,
         password: userPassword,
@@ -66,11 +63,12 @@ const Login = () => {
           navigator("/");
         });
       } else {
-        const errorMessage = response?.response?.data?.error.message.charAt(0).toUpperCase() + response?.response?.data?.error.message.slice(1).toLowerCase();
+        const errorMessage =
+          response?.response?.data?.error.message.charAt(0).toUpperCase() +
+          response?.response?.data?.error.message.slice(1).toLowerCase();
         setError(() => errorMessage.replace("_", " "));
       }
     }
-   
   };
 
   return (
@@ -80,7 +78,7 @@ const Login = () => {
           <label className="form-label">Email</label>
           <Input
             type="email"
-            onChange={(e) => userEmailHandler(e.target.value)}
+            onChange={(e) => userEmailHandler(e.target.value)}  
             placeholder="name@example.com"
             value={userEmail}
             name="userName"
@@ -93,10 +91,12 @@ const Login = () => {
             type="password"
             name="userPassword"
             value={userPassword}
+            max={8}
             onChange={(e) => userPasswordHandler(e.target.value)}
             placeholder="Password"
           />
-          <span style={{ color: "red" }}>{passWordValidate}</span>
+    
+          <span style={{ color: "red" }}>{error ? error : passWordValidate}</span>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <div className="mt-3">

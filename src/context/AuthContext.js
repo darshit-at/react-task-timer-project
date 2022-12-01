@@ -18,7 +18,8 @@ export const AuthContextProvide = (props) => {
 
   const fetchTimerData = async (userId) => {
     const timerData = await getTimerDataAPI(userId);
-    if (timerData) {
+
+    if (timerData?.userTimerData) {
       setTimeRecords(timerData?.userTimerData);
       setItem(
         "currentWidth",
@@ -70,9 +71,9 @@ export const AuthContextProvide = (props) => {
   }, [userData?.userId]);
 
   const startTimeHandler = (time) => {
-    const newStartTime = [...timeRecords];
-    newStartTime.push(time);
-    setTimeRecords(() => newStartTime);
+      const newStartTime = [...timeRecords];
+      newStartTime.push(time);
+      setTimeRecords(() => newStartTime);
   };
 
   const endTimeHandler = (endTime, timerId) => {

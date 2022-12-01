@@ -23,44 +23,44 @@ const SignUp = () => {
 
   const userEmailHandler = (e) => {
     setUserEmail(e.target.value);
-    setError();
-    setEmailValidate('')
+    setEmailValidate("");
   };
   const userPasswordHandler = (e) => {
     setLoading(false);
+    if (userPassword.trim().length > 8) {
+      setPassWordValidate("Password less than eight characters");
+    } else {
+      setPassWordValidate("");
+    }
     setUserPassword(e.target.value);
-    setError();
-    setPassWordValidate("")
   };
 
   const userNameHandler = (e) => {
     setLoading(false);
     setUserName(e.target.value);
-    setError();
     setUserNameValidate("");
   };
   const handlerSubmit = async (e) => {
-
     e.preventDefault();
-    const isEmailVaild    = checkBlankUserInput(userEmail);
+    const isEmailVaild = checkBlankUserInput(userEmail);
     const isPassWordVaild = checkBlankUserInput(userPassword);
     const isUserNameBlank = checkBlankUserInput(userName);
-    
-    if(isEmailVaild) {
+
+    if (isEmailVaild) {
       setEmailValidate("Please enter email ");
     }
-    if(isPassWordVaild){
+    if (isPassWordVaild) {
       setPassWordValidate("Please enter password");
     }
-    if(isUserNameBlank){
-      setUserNameValidate("please enter your name");
+    if (isUserNameBlank) {
+      setUserNameValidate("please enter user name");
     }
-    if (userPassword.trim().length < 6) {
-      setError("Password at least six characters");
+    if (userPassword.trim().length < 6 && userPassword.trim().length > 0) {
+      setPassWordValidate("Password at least six characters");
       setLoading(false);
       return;
     }
-    if(userEmail!== '' && userName!== '' && userPassword!=='') {
+    if (userEmail !== "" && userName !== "" && userPassword.trim().length < 9) {
       setLoading(true);
       const userData = {
         displayName: userName,
@@ -87,11 +87,12 @@ const SignUp = () => {
           navigator("/");
         });
       } else {
-        const errorMessage = response?.response?.data?.error.message.charAt(0).toUpperCase() + response?.response?.data?.error.message.slice(1).toLowerCase();
+        const errorMessage =
+          response?.response?.data?.error.message.charAt(0).toUpperCase() +
+          response?.response?.data?.error.message.slice(1).toLowerCase();
         setError(() => errorMessage.replace("_", " "));
       }
     }
-
   };
 
   return (
@@ -111,15 +112,13 @@ const SignUp = () => {
               }),
             },
           }}
-          
         />
-          <p style={{ color: "red" }}>
-          {userNameValidate}
-        </p>
+        <p style={{ color: "red" }}>{userNameValidate}</p>
         <label className="form-label">Email</label>
         <Input
           type="email"
           name="userEmail"
+          max={8}
           value={userEmail || ""}
           onChange={userEmailHandler}
           placeholder="name@example.com"
@@ -131,9 +130,7 @@ const SignUp = () => {
             },
           }}
         />
-         <p style={{ color: "red" }}>
-          {emailValidate}
-        </p>
+        <p style={{ color: "red" }}>{emailValidate}</p>
         <label className="form-label">password</label>
         <Input
           type="password"
@@ -149,14 +146,9 @@ const SignUp = () => {
             },
           }}
         />
-        <p style={{ color: "red" }}>
-          {userPassword!== "" ? error : passWordValidate}
-        </p>
+        <p style={{ color: "red" }}>{error ? error : passWordValidate}</p>
         <div className="mb-3 button-sign-up">
-          <Button
-            type="submit"
-            classes="form-control authButton"
-          >
+          <Button type="submit" classes="form-control authButton">
             {loading ? (
               <div className="spinner-border text-success" role="status"></div>
             ) : (
