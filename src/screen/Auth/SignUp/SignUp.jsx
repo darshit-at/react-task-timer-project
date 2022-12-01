@@ -8,7 +8,9 @@ import authContext from "../../../context/AuthContext";
 import Swal from "sweetalert2";
 import "./Signup.css";
 import { setItem } from "../../../helper/Storage";
+import "../auth.css";
 import { checkBlankUserInput } from "../../../helper/Validation";
+
 const SignUp = () => {
   const { onLogin } = useContext(authContext);
   const navigator = useNavigate();
@@ -27,14 +29,17 @@ const SignUp = () => {
   };
   const userPasswordHandler = (e) => {
     setLoading(false);
-    if (userPassword.trim().length > 8) {
-      setPassWordValidate("Password less than eight characters");
-    } else {
-      setPassWordValidate("");
-    }
     setUserPassword(e.target.value);
+    setPassWordValidate("");
+    
+    
   };
 
+  const checkInputPasswordHandler = () => {
+    if (userPassword.trim().length > 8) {
+      setPassWordValidate("Password less than eight characters");
+    }
+  }
   const userNameHandler = (e) => {
     setLoading(false);
     setUserName(e.target.value);
@@ -96,71 +101,83 @@ const SignUp = () => {
   };
 
   return (
-    <Card>
-      <form onSubmit={(e) => handlerSubmit(e)}>
-        <label className="form-label">User Name</label>
-        <Input
-          type="text"
-          value={userName || ""}
-          name="userName"
-          onChange={userNameHandler}
-          placeholder="Enter your name"
-          overrides={{
-            Input: {
-              style: ({ $theme }) => ({
-                height: "40px",
-              }),
-            },
-          }}
+    <div className="auth-contain">
+      <div className="logo">
+        <img
+          src="https://management.agreemtechnologies.com/upload/large.png"
+          alt=""
         />
-        <p style={{ color: "red" }}>{userNameValidate}</p>
-        <label className="form-label">Email</label>
-        <Input
-          type="email"
-          name="userEmail"
-          max={8}
-          value={userEmail || ""}
-          onChange={userEmailHandler}
-          placeholder="name@example.com"
-          overrides={{
-            Input: {
-              style: ({ $theme }) => ({
-                height: "40px",
-              }),
-            },
-          }}
-        />
-        <p style={{ color: "red" }}>{emailValidate}</p>
-        <label className="form-label">password</label>
-        <Input
-          type="password"
-          value={userPassword || ""}
-          onChange={userPasswordHandler}
-          name="userPassword"
-          placeholder="Password"
-          overrides={{
-            Input: {
-              style: ({ $theme }) => ({
-                height: "40px",
-              }),
-            },
-          }}
-        />
-        <p style={{ color: "red" }}>{error ? error : passWordValidate}</p>
-        <div className="mb-3 button-sign-up">
-          <Button type="submit" classes="form-control authButton">
-            {loading ? (
-              <div className="spinner-border text-success" role="status"></div>
-            ) : (
-              "Sign up"
-            )}
-          </Button>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <NavLink to="/auth">Already user</NavLink>
-        </div>
-      </form>
-    </Card>
+      </div>
+      <Card>
+        <form onSubmit={(e) => handlerSubmit(e)}>
+          <label className="form-label">User Name</label>
+          <Input
+            type="text"
+            value={userName || ""}
+            name="userName"
+       
+            placeholder="Enter your name"
+            overrides={{
+              Input: {
+                style: ({ $theme }) => ({
+                  height: "40px",
+                }),
+              },
+            }}
+          />
+          <p style={{ color: "red" }}>{userNameValidate}</p>
+          <label className="form-label">Email</label>
+          <Input
+            type="email"
+            name="userEmail"
+            max={8}
+            value={userEmail || ""}
+            onChange={userEmailHandler}
+            placeholder="name@example.com"
+            overrides={{
+              Input: {
+                style: ({ $theme }) => ({
+                  height: "40px",
+                }),
+              },
+            }}
+          />
+          <p style={{ color: "red" }}>{emailValidate}</p>
+          <label className="form-label">password</label>
+          <Input
+            type="password"
+            value={userPassword || ""}
+            onChange={userPasswordHandler}
+            name="userPassword"
+            onBlur={() => checkInputPasswordHandler()}
+            placeholder="Password"
+            overrides={{
+              Input: {
+                style: ({ $theme }) => ({
+                  height: "40px",
+                }),
+              },
+            }}
+          />
+          <p style={{ color: "red" }}>{error ? error : passWordValidate}</p>
+          <div className="mb-3 button-sign-up">
+            <Button type="submit" classes="form-control authButton">
+              {loading ? (
+                <div
+                  className="spinner-border text-success"
+                  role="status"
+                ></div>
+              ) : (
+                "Sign up"
+              )}
+            </Button>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <NavLink to="/auth">Already user</NavLink>
+          </div>
+        </form>
+      </Card>
+    </div>
   );
 };
 
