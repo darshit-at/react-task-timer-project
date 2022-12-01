@@ -65,10 +65,6 @@ export const AuthContextProvide = (props) => {
     });
   };
 
-  const getCurrentTimerRecords = (timeData) => {
-    return timeData;
-  };
-
   const getTimerRecords = useCallback(() => {
     fetchTimerData(userData?.userId);
   }, [userData?.userId]);
@@ -87,13 +83,13 @@ export const AuthContextProvide = (props) => {
       }
       return item;
     });
-    getCurrentTimerRecords(setEndTime);
     setTimeRecords(() => setEndTime);
   };
 
   const logInHandler = (value) => {
     setIsAuth(value);
   };
+
   return (
     <authContext.Provider
       value={{
