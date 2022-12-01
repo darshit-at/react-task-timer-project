@@ -8,7 +8,7 @@ import { fetchUserData } from "../../../service/AuthService";
 import Swal from "sweetalert2";
 import { setItem } from "../../../helper/Storage";
 import authContext from "../../../context/AuthContext";
-import { checkBlankUserInput } from "../../../helper/Validation";
+import { authErrorHandler, checkBlankUserInput } from "../../../helper/Validation";
 import '../auth.css';
 
 const Login = () => {
@@ -23,10 +23,12 @@ const Login = () => {
   const userEmailHandler = (value) => {
     setUserEmail(value);
     setEmailValidate("");
+    setError();
   };
   const userPasswordHandler = (value) => {
     setUserPassword(value);
     setPassWordValidate("");
+    setError();
   };
 
   const handlerSubmit = async (e) => {
@@ -64,10 +66,9 @@ const Login = () => {
           navigator("/");
         });
       } else {
-        const errorMessage =
-          response?.response?.data?.error.message.charAt(0).toUpperCase() +
-          response?.response?.data?.error.message.slice(1).toLowerCase();
-        setError(() => errorMessage.replace("_", " "));
+        const errorMessage = response?.response?.data?.error.message;
+        const responseText = authErrorHandler(errorMessage);
+        setError(responseText);
       }
     }
   };
@@ -91,7 +92,7 @@ const Login = () => {
             <span style={{ color: "red" }}>{emailValidate}</span>
           </div>
           <div className="mb-3">
-            <label className="form-label">password</label>
+            <label className="form-label">Password</label>
             <Input
               type="password"
               name="userPassword"
@@ -104,7 +105,7 @@ const Login = () => {
             <span style={{ color: "red" }}>
               {error ? error : passWordValidate}
             </span>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            
           </div>
           <div className="mt-3">
             <Button type="submit" classes="form-control authButton">

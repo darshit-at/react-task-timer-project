@@ -37,7 +37,7 @@ const SignUp = () => {
 
   const checkInputPasswordHandler = () => {
     if (userPassword.trim().length > 8) {
-      setPassWordValidate("Password less than eight characters");
+      setPassWordValidate("maximum 8 digits allowed");
     }
   }
   const userNameHandler = (e) => {
@@ -45,6 +45,7 @@ const SignUp = () => {
     setUserName(e.target.value);
     setUserNameValidate("");
   };
+
   const handlerSubmit = async (e) => {
     e.preventDefault();
     const isEmailVaild = checkBlankUserInput(userEmail);
@@ -61,7 +62,7 @@ const SignUp = () => {
       setUserNameValidate("please enter user name");
     }
     if (userPassword.trim().length < 6 && userPassword.trim().length > 0) {
-      setPassWordValidate("Password at least six characters");
+      setPassWordValidate("Please enter minimum 6 digit");
       setLoading(false);
       return;
     }
@@ -91,12 +92,7 @@ const SignUp = () => {
           });
           navigator("/");
         });
-      } else {
-        const errorMessage =
-          response?.response?.data?.error.message.charAt(0).toUpperCase() +
-          response?.response?.data?.error.message.slice(1).toLowerCase();
-        setError(() => errorMessage.replace("_", " "));
-      }
+      } 
     }
   };
 
@@ -115,8 +111,8 @@ const SignUp = () => {
             type="text"
             value={userName || ""}
             name="userName"
-            onChange={userNameHandler}
-            placeholder="Enter your name"
+            onChange={userNameHandler                                                                                         }
+            placeholder="Username"
             overrides={{
               Input: {
                 style: ({ $theme }) => ({

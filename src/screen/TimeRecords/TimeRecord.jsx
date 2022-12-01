@@ -29,7 +29,7 @@ const TimeRecord = (props) => {
             <th>No.</th>
             <th>Date</th>
             <th>Start Time</th>
-            <th>End Timer</th>
+            <th>End Time</th>
           </tr>
         </thead>
         <tbody>
