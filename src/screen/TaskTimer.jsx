@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import authContext from "../context/AuthContext";
 import DashBoard from "./Dashboard/Dashboard";
 import TimeRecord from "./TimeRecords/TimeRecord";
+import MainHeader from "../components/MainHeader/MainHeader";
 
 const TaskTimer = (props) => {
   const { onComponentMount, userTimeList } = useContext(authContext);

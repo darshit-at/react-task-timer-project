@@ -16,7 +16,6 @@ import authContext from "../../context/AuthContext";
 const MainHeader = () => {
   const userName = getItem("user");
   const { onLogOut } = useContext(authContext);
-  const navigator = useNavigate("/");
   const [showToggleOption, setShowToggleOption] = useState(false);
   const [isCurrenScreenMoblieScreenSize, setIsCurrenScreenMoblieScreenSize] =
     useState();

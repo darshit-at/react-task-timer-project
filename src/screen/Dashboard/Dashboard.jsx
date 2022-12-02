@@ -72,7 +72,7 @@ const DashBoard = (props) => {
       }),
       endTime: "",
     };
-   
+
     const clearTimer = setTimeout(() => {
       onStartTimer(timeDetails);
       setIsUserStartTimer(true);
@@ -89,6 +89,10 @@ const DashBoard = (props) => {
     });
     onEndTimer(endTime);
     setIsUserStartTimer(false);
+  };
+
+  const startTimerOnComponetUnmount = () => {
+    setDropWidth((previewState) => +previewState + 1);
   };
 
   const convertSecondsToHour = (totalSeconds) => {
@@ -127,7 +131,6 @@ const DashBoard = (props) => {
             }}
           />
           <h2>{convertSecondsToHour(dropWidth)}</h2>
-
           {isUserStartTimer ? (
             <Button
               type="button"

@@ -3,28 +3,27 @@ import Login from "./screen/Auth/Login/Login";
 import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import SignUp from "./screen/Auth/SignUp/SignUp";
-import authContext from "./context/AuthContext";
-import MainHeader from "./components/MainHeader/MainHeader";
-import { getItem } from "./helper/Storage";
 import Profile from "./screen/Profile/Profile";
 import TimeRecord from "./screen/TimeRecords/TimeRecord";
 import TaskTimer from "./screen/TaskTimer";
+import authContext from "./context/AuthContext";
+import { getItem } from "./helper/Storage";
+import MainHeader from "./components/MainHeader/MainHeader";
 
 function App() {
-  const isUserAlreadyLogin = getItem("user");
-  const navigator = useNavigate();
   const { isAuth } = useContext(authContext);
-
+  const navigater = useNavigate();
+  const user = getItem("user");
   useEffect(() => {
-    if (!isAuth && !isUserAlreadyLogin?.userToken) {
-      navigator("/auth");
+    if (!isAuth && !user?.userToken) {
+      navigater("/auth");
     }
   }, []);
 
   return (
     <Fragment>
       {isAuth && <MainHeader />}
-      {!isAuth && isUserAlreadyLogin?.userToken && <MainHeader />}
+      {!isAuth && user?.userToken && <MainHeader />}
       <Routes>
         <Route path="/" element={<TaskTimer />} />
         <Route path="/auth" element={<Login />} />

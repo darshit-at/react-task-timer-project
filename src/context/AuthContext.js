@@ -18,7 +18,6 @@ export const AuthContextProvide = (props) => {
 
   const fetchTimerData = async (userId) => {
     const timerData = await getTimerDataAPI(userId);
-
     if (timerData?.userTimerData) {
       setTimeRecords(timerData?.userTimerData);
       setItem(
@@ -40,18 +39,21 @@ export const AuthContextProvide = (props) => {
   useEffect(() => {
     const sentTimerData = async () => {
       const timerDetails = {
-        width:timer.currentDropWidth,
+        width: timer.currentDropWidth,
         isUserStartTimer: timer.isStartTimer,
         userTimerData: timeRecords,
       };
       const response = await addTimerDataAPI(timerDetails, userData?.userId);
-      setItem(
-        "currentWidth",
-        JSON.stringify({
-          width: response?.width,
-          isUserStartTimer: response?.isUserStartTimer,
-        })
-      );
+      if(response?.width !== '' && response?.isUserStartTimer !== "") {
+        setItem(
+          "currentWidth",
+          JSON.stringify({
+            width: response?.width,
+            isUserStartTimer: response?.isUserStartTimer,
+          })
+        );
+      }
+      
     };
     sentTimerData();
   }, [timer.currentDropWidth, timer.isStartTimer]);
@@ -66,14 +68,15 @@ export const AuthContextProvide = (props) => {
     });
   };
 
+  
   const getTimerRecords = useCallback(() => {
     fetchTimerData(userData?.userId);
   }, [userData?.userId]);
 
   const startTimeHandler = (time) => {
-      const newStartTime = [...timeRecords];
-      newStartTime.push(time);
-      setTimeRecords(() => newStartTime);
+    const newStartTime = [...timeRecords];
+    newStartTime.push(time);
+    setTimeRecords(() => newStartTime);
   };
 
   const endTimeHandler = (endTime, timerId) => {
@@ -91,6 +94,10 @@ export const AuthContextProvide = (props) => {
     setIsAuth(value);
   };
 
+  const logOutHandler = (value) => {
+    setIsAuth(value); 
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -100,7 +107,8 @@ export const AuthContextProvide = (props) => {
         onStartTimer: startTimeHandler,
         onChangeDropWidth: getDropWidth,
         userTimeList: timeRecords,
-        onEndTimer: endTimeHandler,
+        onLogOut : logOutHandler,
+        onEndTimer: endTimeHandler,   
       }}
     >
       {props.children}

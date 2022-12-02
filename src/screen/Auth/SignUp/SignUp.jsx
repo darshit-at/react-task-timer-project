@@ -31,15 +31,13 @@ const SignUp = () => {
     setLoading(false);
     setUserPassword(e.target.value);
     setPassWordValidate("");
-    
-    
   };
 
   const checkInputPasswordHandler = () => {
     if (userPassword.trim().length > 8) {
-      setPassWordValidate("maximum 8 digits allowed");
+      setPassWordValidate("Please enter maximum 8 digit");
     }
-  }
+  };
   const userNameHandler = (e) => {
     setLoading(false);
     setUserName(e.target.value);
@@ -92,7 +90,7 @@ const SignUp = () => {
           });
           navigator("/");
         });
-      } 
+      }
     }
   };
 
@@ -111,7 +109,7 @@ const SignUp = () => {
             type="text"
             value={userName || ""}
             name="userName"
-            onChange={userNameHandler                                                                                         }
+            onChange={userNameHandler}
             placeholder="Username"
             overrides={{
               Input: {

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import { Input } from "baseui/input";
@@ -6,13 +6,19 @@ import Card from "../../../components/UI/Card";
 import { useState } from "react";
 import { fetchUserData } from "../../../service/AuthService";
 import Swal from "sweetalert2";
-import { setItem } from "../../../helper/Storage";
+import { clearStorage, setItem } from "../../../helper/Storage";
 import authContext from "../../../context/AuthContext";
-import { authErrorHandler, checkBlankUserInput } from "../../../helper/Validation";
-import '../auth.css';
+import {
+  authErrorHandler,
+  checkBlankUserInput,
+} from "../../../helper/Validation";
+import "../auth.css";
+import { getItem } from "../../../helper/Storage";
+import TaskTimer from "../../TaskTimer";
 
 const Login = () => {
-  const { onLogin } = useContext(authContext);
+  const { onLogin, onLogOut, isAuth } = useContext(authContext);
+  const user = getItem("user");
   const navigator = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -20,6 +26,11 @@ const Login = () => {
   const [passWordValidate, setPassWordValidate] = useState("");
   const [error, setError] = useState();
 
+  useEffect(() => {
+    if (isAuth || user?.userToken) {
+       navigator("/");
+    };
+  }, []);
   const userEmailHandler = (value) => {
     setUserEmail(value);
     setEmailValidate("");
@@ -76,7 +87,10 @@ const Login = () => {
   return (
     <div className="auth-contain">
       <div className="logo">
-        <img src="https://management.agreemtechnologies.com/upload/large.png" alt="" />
+        <img
+          src="https://management.agreemtechnologies.com/upload/large.png"
+          alt=""
+        />
       </div>
       <Card>
         <form onSubmit={(e) => handlerSubmit(e)}>
@@ -104,7 +118,6 @@ const Login = () => {
             <span style={{ color: "red" }}>
               {error ? error : passWordValidate}
             </span>
-            
           </div>
           <div className="mt-3">
             <Button type="submit" classes="form-control authButton">
@@ -116,6 +129,7 @@ const Login = () => {
           </div>
         </form>
       </Card>
+      
     </div>
   );
 };
