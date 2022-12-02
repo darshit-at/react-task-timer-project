@@ -15,7 +15,7 @@ const TaskTimer = (props) => {
       setLoading(false);
       clearTimeout(clear);
     }, 500);
-  }, [onComponentMount]);
+  }, []);
 
   return (
     <Fragment>

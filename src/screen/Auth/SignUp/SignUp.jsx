@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Button from "../../../components/Button/Button";
 import { Input } from "baseui/input";
 import Card from "../../../components/UI/Card";
@@ -10,9 +10,10 @@ import "./Signup.css";
 import { setItem } from "../../../helper/Storage";
 import "../auth.css";
 import { checkBlankUserInput } from "../../../helper/Validation";
-
+import { getItem } from "../../../helper/Storage";
 const SignUp = () => {
-  const { onLogin } = useContext(authContext);
+  const { onLogin ,isAuth } = useContext(authContext);
+  const user = getItem("user");
   const navigator = useNavigate();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -22,6 +23,12 @@ const SignUp = () => {
   const [passWordValidate, setPassWordValidate] = useState("");
   const [userNameValidate, setUserNameValidate] = useState("");
   const [error, setError] = useState();
+
+  useEffect(() => {
+    if (isAuth || user?.userToken) {
+       navigator("/");
+    };
+  }, []);
 
   const userEmailHandler = (e) => {
     setUserEmail(e.target.value);

@@ -17,7 +17,9 @@ export const AuthContextProvide = (props) => {
   });
 
   const fetchTimerData = async (userId) => {
+    console.log(userData)
     const timerData = await getTimerDataAPI(userId);
+    console.log(timerData)
     if (timerData?.userTimerData) {
       setTimeRecords(timerData?.userTimerData);
       setItem(
@@ -31,10 +33,12 @@ export const AuthContextProvide = (props) => {
   };
 
   useEffect(() => {
-    if (userData?.userId) {
-      fetchTimerData(userData?.userId);
+    const userId = userData?.userId
+    if(userId) {
+      fetchTimerData(userId);
     }
-  }, [userData?.userId]);
+   
+  }, []);
 
   useEffect(() => {
     const sentTimerData = async () => {
@@ -44,7 +48,7 @@ export const AuthContextProvide = (props) => {
         userTimerData: timeRecords,
       };
       const response = await addTimerDataAPI(timerDetails, userData?.userId);
-      if(response?.width !== '' && response?.isUserStartTimer !== "") {
+      if(response?.width !== '' && response?.isUserStartTimer !== '') {
         setItem(
           "currentWidth",
           JSON.stringify({
@@ -69,9 +73,12 @@ export const AuthContextProvide = (props) => {
   };
 
   
-  const getTimerRecords = useCallback(() => {
-    fetchTimerData(userData?.userId);
-  }, [userData?.userId]);
+  const getTimerRecords = () => {
+    const userId = userData?.userId
+    if(userId) {
+      fetchTimerData(userId);
+    }
+  }
 
   const startTimeHandler = (time) => {
     const newStartTime = [...timeRecords];
