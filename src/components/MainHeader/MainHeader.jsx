@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ContentTitle from "../ContentTitle/ContentTitle";
 import NavBar from "./NavBar/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,14 +9,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./MainHeader.css";
 import { clearStorage, getItem } from "../../helper/Storage";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar/MenuBar";
+import authContext from "../../context/AuthContext";
 
 const MainHeader = () => {
   const userName = getItem("user");
+  const { onLogOut } = useContext(authContext);
+  const navigator = useNavigate("/");
   const [showToggleOption, setShowToggleOption] = useState(false);
-  const [isCurrenScreenMoblieScreenSize, setIsCurrenScreenMoblieScreenSize] = useState();
-  const [toggleMenu, setToggleMenu] = useState(false)
+  const [isCurrenScreenMoblieScreenSize, setIsCurrenScreenMoblieScreenSize] =
+    useState();
+  const [toggleMenu, setToggleMenu] = useState(false);
   useEffect(() => {
     const toggleMenuHandler = () => {
       if (window.innerWidth < 500) {
@@ -38,7 +42,7 @@ const MainHeader = () => {
 
   const closeToggleHandler = () => {
     setToggleMenu(false);
-  }
+  };
   const logOutHandler = () => {
     clearStorage();
     window.location.reload();
@@ -46,7 +50,7 @@ const MainHeader = () => {
 
   const showToggleMenuHandler = () => {
     setToggleMenu(true);
-  }
+  };
   const showToggle = () => {
     return (
       <div className="toggle">
@@ -70,7 +74,7 @@ const MainHeader = () => {
         <div className="col-6 col-md-3 col-sm-3 col-lg-3 header-contain">
           <ContentTitle title="Task Time" />
         </div>
-        {!isCurrenScreenMoblieScreenSize &&  (
+        {!isCurrenScreenMoblieScreenSize && (
           <div className="col-3 col-md-6 col-sm-6 col-lg-6  header-contain">
             <NavBar />
           </div>
@@ -79,16 +83,25 @@ const MainHeader = () => {
         <div className="col-6 col-md-3 col-sm-3 col-lg-3  header-contain">
           <div className="float-end">
             {isCurrenScreenMoblieScreenSize ? (
-              <FontAwesomeIcon icon={faBars} className = "menu-icon" onClick={showToggleMenuHandler}/>
+              <FontAwesomeIcon
+                icon={faBars}
+                className="menu-icon"
+                onClick={showToggleMenuHandler}
+              />
             ) : (
               <div onClick={togglerHandler}>
                 <FontAwesomeIcon icon={faUser} />
                 <span>Hi! {userName?.userName}</span>
               </div>
             )}
-           {toggleMenu && <MenuBar onLogOut = {() => logOutHandler()} onClose = {closeToggleHandler} isClickOnMenuIcon = {toggleMenu}/>}
+            {toggleMenu && (
+              <MenuBar
+                onLogOut={() => logOutHandler()}
+                onClose={closeToggleHandler}
+                isClickOnMenuIcon={toggleMenu}
+              />
+            )}
           </div>
-
         </div>
         {showToggleOption && showToggle()}
       </div>
